@@ -10,6 +10,7 @@ import {
 import { Pagination } from '@mui/material';
 import { useState } from 'react';
 import EmailTemplateContent from './components/EmailTemplateContent';
+import EmailTemplateEditable from './components/EmailTemplateEditable';
 
 export default function EmailTemplatePage() {
   const [alert, setAlert] = useState<DeleteItem>({
@@ -45,7 +46,14 @@ export default function EmailTemplatePage() {
               className='w-full border outline-primary border-gray-200 p-2 rounded-md'
             />
           </label>
-          <EmailTemplateContent />
+          <div className='grid grid-cols-2 mt-4 gap-4'>
+            <div>
+              <EmailTemplateEditable />
+            </div>
+            <div>
+              <EmailTemplateContent />
+            </div>
+          </div>
           <div className='text-center mt-8'>
             <button className='px-10 py-2 bg-primary font-bold text-white rounded-lg'>
               Save

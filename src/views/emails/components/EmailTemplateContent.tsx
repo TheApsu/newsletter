@@ -42,7 +42,11 @@ export default function EmailTemplateContent() {
         <div
           style={{ textAlign: 'center', margin: '20px 0', padding: '0 80px' }}
         >
-          <img src={logo} alt='Candlelight Concert' style={{ width: '80%' }} />
+          <img
+            src={logo}
+            alt='Candlelight Concert'
+            style={{ width: '80%', margin: 'auto' }}
+          />
         </div>
         <img
           src={mainImage}
@@ -54,17 +58,18 @@ export default function EmailTemplateContent() {
             {content}
           </p>
           <a
-            href='https://ipcmiamibeach.com'
+            href={endContent.href}
             target='_blank'
             style={{ fontSize: 14, lineHeight: '1.5', color: '#e67e1f' }}
           >
-            {endContent}
+            {endContent.name}
           </a>
         </div>
       </div>
 
-      {listCard.map((card) => (
+      {listCard.map((card, index) => (
         <div
+          key={index}
           style={{
             padding: '10px 5px',
             maxWidth: 500,
@@ -91,7 +96,13 @@ export default function EmailTemplateContent() {
                 padding: 10,
               }}
             />
-            <div style={{ textAlign: 'center', padding: '0 5px' }}>
+            <div
+              style={{
+                textAlign: 'center',
+                padding: '0 5px',
+                wordBreak: 'break-all',
+              }}
+            >
               <h3
                 style={{
                   fontSize: 22,

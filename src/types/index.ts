@@ -13,7 +13,12 @@ export const userSchema = z.object({
   uid: z.string().nullable(),
 });
 
+export const fileSchema = z.object({
+  fileName: z.array(z.string()),
+});
+
 export type User = z.infer<typeof userSchema>;
+export type FileResponse = z.infer<typeof fileSchema>;
 
 export type DeleteItem = {
   id?: number;
