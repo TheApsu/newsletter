@@ -34,7 +34,7 @@ export default function EmailTemplatePage() {
 
   return (
     <div className='container mx-auto px-8'>
-      <h2 className='text-4xl text-primary font-bold'>Group Emails </h2>
+      <h2 className='text-4xl text-primary font-bold'>Template Mail </h2>
       <p className='text-xl'>Create or edit some resource</p>
       <div className='grid grid-cols-3 gap-4 mt-8 '>
         <form className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit'>
