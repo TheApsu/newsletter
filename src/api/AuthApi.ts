@@ -6,7 +6,7 @@ export const signIn = async (
   formData: AuthSignIn
 ): Promise<User | undefined> => {
   try {
-    const { data, headers } = await api.post('/auth/sign_in', formData);
+    const { data, headers } = await api.post('/auth/login', formData);
     const client = headers['client'];
     const accessToken = headers['access-token'];
     const uid = headers['uid'];
@@ -14,10 +14,10 @@ export const signIn = async (
     localStorage.setItem('client', client);
     localStorage.setItem('access-token', accessToken);
     localStorage.setItem('uid', uid);
-
-    const result = userSchema.safeParse(data.data);
-    if (result.success) {
-      return result.data;
+    if (data.success) {
+      localStorage.setItem('access-token', data.token)
+      const user = data.user
+      return user
     }
     return undefined;
   } catch (error) {
