@@ -14,9 +14,8 @@ const getLocalUser = (user: User | undefined) => {
     user || {
       email: '',
       id: null,
-      uid: null,
-      first_name: null,
-      last_name: null,
+      name: null,
+      rol: null,
     }
   );
 };
@@ -31,9 +30,8 @@ export const createUserSlice: StateCreator<
   user: {
     email: '',
     id: null,
-    uid: null,
-    first_name: null,
-    last_name: null,
+    name: '',
+    rol: '',
   },
   getUser: async () => {
     try {

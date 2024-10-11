@@ -15,9 +15,9 @@ export const signIn = async (
     localStorage.setItem('access-token', accessToken);
     localStorage.setItem('uid', uid);
     if (data.success) {
-      localStorage.setItem('access-token', data.token)
-      const user = data.user
-      return user
+      localStorage.setItem('access-token', data.token);
+      const user = data.user;
+      return user;
     }
     return undefined;
   } catch (error) {
@@ -30,7 +30,7 @@ export const signIn = async (
 export const me = async (): Promise<User | undefined> => {
   try {
     const { data } = await api('/auth/me');
-    const result = userSchema.safeParse(data);
+    const result = userSchema.safeParse(data.user);
     if (result.success) {
       return result.data as User;
     }

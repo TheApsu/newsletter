@@ -1,4 +1,4 @@
-import { Suspense } from 'react';
+import { Suspense, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import { useAppStore } from './stores/useAppStore';
@@ -14,11 +14,11 @@ import EmailTemplatePage from './views/emails/EmailTemplatePage';
 export default function AppRouter() {
   const loadingUser = useAppStore((state) => state.loadingUser);
   const user = useAppStore((state) => state.user);
-  // const getUser = useAppStore((state) => state.getUser);
+  const getUser = useAppStore((state) => state.getUser);
 
-  // useEffect(() => {
-  //   getUser();
-  // }, []);
+  useEffect(() => {
+    getUser();
+  }, []);
 
   if (loadingUser) {
     return (
@@ -35,11 +35,11 @@ export default function AppRouter() {
           path='/sign-in'
           element={
             <Suspense fallback='Cargando...'>
-              <SignInPage uid={user.uid} />
+              <SignInPage uid={user.id} />
             </Suspense>
           }
         />
-        <Route element={<Layout uid={user.uid} />}>
+        <Route element={<Layout uid={user.id} />}>
           <Route
             path='/group-emails'
             index

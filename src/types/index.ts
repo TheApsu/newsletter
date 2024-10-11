@@ -5,22 +5,37 @@ export type AuthSignIn = {
   password: string;
 };
 
+export const emailGroupSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+});
+
 export const userSchema = z.object({
-  id: z.number().nullable(),
-  first_name: z.string().nullable(),
-  last_name: z.string().nullable(),
   email: z.string().nullable(),
-  uid: z.string().nullable(),
+  id: z.string().nullable(),
+  name: z.string().nullable(),
+  rol: z.string().nullable(),
 });
 
 export const fileSchema = z.object({
   fileName: z.array(z.string()),
 });
 
+export type IndexQueryFilters = {
+  pag?: number;
+  name?: string;
+};
 export type User = z.infer<typeof userSchema>;
+export type EmailGroup = z.infer<typeof emailGroupSchema>;
 export type FileResponse = z.infer<typeof fileSchema>;
 
 export type DeleteItem = {
   id?: number;
   show: boolean;
+};
+
+export type Meta = {
+  total: number;
+  totalPage: number;
+  actualPage: number;
 };

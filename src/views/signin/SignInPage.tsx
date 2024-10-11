@@ -11,7 +11,7 @@ import { useAppStore } from '@/stores/useAppStore';
 import { signIn } from '@/api/AuthApi';
 
 type SignInPageProps = {
-  uid: User['uid'];
+  uid: User['id'];
 };
 
 export default function SignInPage({ uid }: SignInPageProps) {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import { Navigate, NavLink, Outlet } from 'react-router-dom';
 import SplitPane, { Pane } from 'split-pane-react';
 import 'split-pane-react/esm/themes/default.css';
 
@@ -23,9 +23,9 @@ export default function Layout({ uid }: SignInPageProps) {
       ? 'bg-white font-bold transition-all  block p-3 rounded-lg [&_.wrapper-svg]:bg-primary [&_svg]:text-white shadow-md'
       : 'transition-all block p-3 rounded-lg [&_.wrapper-svg]:bg-white ';
 
-  // if (!uid) {
-  //   return <Navigate to='/sign-in' />;
-  // }
+  if (!uid) {
+    return <Navigate to='/sign-in' />;
+  }
 
   return (
     <div style={{ height: '100vh' }} className='bg-gray-100'>
