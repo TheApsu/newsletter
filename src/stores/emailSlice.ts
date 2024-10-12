@@ -2,10 +2,10 @@ import { StateCreator } from 'zustand';
 import { Email } from '../types';
 
 export type EmailType = {
-  email?: Email;
+  name?: Email;
   editingId?: Email['id'];
   setEditingId: (id: Email['id']) => void;
-  setEmail: (email: Email | undefined) => void;
+  setEmail: (name: Email | undefined) => void;
 };
 
 export const createEmailSlice: StateCreator<
@@ -14,16 +14,17 @@ export const createEmailSlice: StateCreator<
   [],
   EmailType
 > = (set) => ({
-  email: undefined,
+  name: undefined,
+  groupId: '',
 
-  setEmail: (email) => {
-    if (!email) {
+  setEmail: (name) => {
+    if (!name) {
       set({
         editingId: undefined,
       });
     }
     set({
-      email,
+      name,
     });
   },
   setEditingId: (editingId) => {

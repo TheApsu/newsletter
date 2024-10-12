@@ -106,7 +106,7 @@ export default function GroupEmailsPage() {
             <button
               onClick={clearForm}
               type='button'
-              className='px-10 py-2  text-primary font-bold border border-primary rounded-lg'
+              className='px-10 py-2 text-primary font-bold border border-primary rounded-lg'
             >
               Clear
             </button>
