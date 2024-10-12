@@ -1,6 +1,6 @@
 import ConfirmDialog from '@/components/ConfirmDialog';
-import { useQueryClient } from '@tanstack/react-query';
-import { DeleteItem, IndexQueryFilters, Meta } from '@/types/index';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { DeleteItem, EmailGroup, IndexQueryFilters, Meta } from '@/types/index';
 import {
   EnvelopeIcon,
   MagnifyingGlassIcon,
@@ -10,6 +10,7 @@ import {
 import { Pagination } from '@mui/material';
 import { ChangeEvent, Dispatch } from 'react';
 import { handleChangeDebounce } from 'utils/debounceInput';
+import { getAllGroups } from '@/api/EmailGroupApi';
 
 type SearcherTemplateProps = {
   data: { id: string; name: string }[];
@@ -22,6 +23,7 @@ type SearcherTemplateProps = {
   handleDeleteBtn: (id: string) => void;
   handleEditBtn: (id: string) => void;
   handleAcceptBtn: () => void;
+  filter: boolean | false;
 };
 
 export default function SearcherTemplate({
@@ -35,6 +37,7 @@ export default function SearcherTemplate({
   handleDeleteBtn,
   handleEditBtn,
   handleAcceptBtn,
+  filter
 }: SearcherTemplateProps) {
   const queryClient = useQueryClient();
   const handleChange = async (ev: ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +50,22 @@ export default function SearcherTemplate({
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     }, 100);
   };
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    setFilters({
+      ...filters,
+      groupId: selectedValue,
+    });
+    setTimeout(() => {
+      queryClient.invalidateQueries({ queryKey: [queryKey] });
+    }, 100);
+    // Llama a la función que necesitas aquí
+  };
+  const { data: emailGroup } = useQuery({
+    queryKey: ['emailGroups'],
+    queryFn: () => getAllGroups({pag: 1}),
+    refetchOnWindowFocus: false,
+  });
 
   return (
     <>
@@ -62,6 +81,23 @@ export default function SearcherTemplate({
               placeholder='Search by group name'
               onChange={handleChange}
             />
+            {
+              filter && emailGroup &&
+              <select
+                id='groupId'
+                className='w-full border outline-primary border-gray-200 p-2 rounded-md'
+                onChange={handleSelectChange}
+              >
+                <option value='' selected disabled>
+                  Select an Option
+                </option>
+                {emailGroup.data.map((emailGroup: EmailGroup) => (
+                  <option value={emailGroup.id} key={emailGroup.id}>
+                    {emailGroup.name}
+                  </option>
+                ))}
+              </select>
+            }
           </div>
         </div>
         <div className='mt-4 space-y-2  overflow-auto'>

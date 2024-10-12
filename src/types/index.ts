@@ -29,6 +29,7 @@ export const fileSchema = z.object({
 export type IndexQueryFilters = {
   pag?: number;
   name?: string;
+  groupId?: string;
 };
 export type User = z.infer<typeof userSchema>;
 export type EmailGroup = z.infer<typeof emailGroupSchema>;

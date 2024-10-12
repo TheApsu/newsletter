@@ -20,6 +20,7 @@ export default function EmailList() {
   const [filters, setFilters] = useState<IndexQueryFilters>({
     name: '',
     pag: 1,
+    groupId: ''
   });
 
   const queryClient = useQueryClient();
@@ -36,8 +37,7 @@ export default function EmailList() {
 
   const { mutate } = useMutation({
     mutationFn: deleteEmail,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
       setAlert({
         id: undefined,
         show: false,
@@ -60,7 +60,7 @@ export default function EmailList() {
     if (email) {
       setEmail(email);
     }
-  }, [email]);
+  }, [email, setEmail]);
 
   const handleAcceptBtn = () => mutate(alert.id!);
 
@@ -97,6 +97,7 @@ export default function EmailList() {
           handleDeleteBtn={handleDeleteBtn}
           handleEditBtn={handleEditBtn}
           setAlert={setAlert}
+          filter={true}
         />
       </>
     );

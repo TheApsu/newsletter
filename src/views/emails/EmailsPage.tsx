@@ -15,7 +15,7 @@ import EmailList from './components/EmailList';
 import { getAllGroups } from '@/api/EmailGroupApi';
 
 export default function EmailsPage() {
-  const email = emailAppStore((store) => store.email);
+  const email = emailAppStore((store) => store.name);
   const setEmail = emailAppStore((store) => store.setEmail);
   const queryClient = useQueryClient();
 
@@ -84,7 +84,7 @@ export default function EmailsPage() {
     setEmail(undefined);
     setTimeout(() => {
       queryClient.invalidateQueries({
-        queryKey: ['emailGroup', backupId],
+        queryKey: ['email', backupId],
       });
     });
     reset();
@@ -109,56 +109,66 @@ export default function EmailsPage() {
       mutate(data);
     }
   };
-  return (
-    <div className='container mx-auto px-8'>
-      <h2 className='text-4xl text-primary font-bold'>Emails </h2>
-      <p className='text-xl'>Create or edit some resource</p>
-      <div className='grid grid-cols-3 gap-4 mt-8'>
-        <form onSubmit={handleSubmit(handleForm)} className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit space-y-4'>
-          <div>
-            <label htmlFor='groupId'>
-              Select a Group
-              <select
-                id='groupId'
-                className='w-full border outline-primary border-gray-200 p-2 rounded-md'
-                value=''
-              >
-                <option value='' disabled>
-                  Select an Option
-                </option>
-                {emailGroup && emailGroup.data.map((emailGroup: EmailGroup) => (
-                  <option value={emailGroup.id}>
-                    {emailGroup.name}
+  if (emailGroup) {
+    return (
+      <div className='container mx-auto px-8'>
+        <h2 className='text-4xl text-primary font-bold'>Emails </h2>
+        <p className='text-xl'>Create or edit some resource</p>
+        <div className='grid grid-cols-3 gap-4 mt-8'>
+          <form onSubmit={handleSubmit(handleForm)} className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit space-y-4'>
+            <div>
+              <label htmlFor='groupId'>
+                Select a Group
+                <select
+                  id='groupId'
+                  className='w-full border outline-primary border-gray-200 p-2 rounded-md'
+                  {...register('groupId', { required: 'This field is required' })}
+                >
+                  <option value='' selected disabled>
+                    Select an Option
                   </option>
-                ))}
-              </select>
-            </label>
-          </div>
-          <div>
-            <label htmlFor='email'>
-              Enter a valid email
-              <input
-                id='name'
-                className='w-full border outline-primary border-gray-200 p-2 rounded-md'
-                type='name'
-                {...register('name', { required: 'This field is required' })}
-              />
-            </label>
-            {errors.name && <ErrorMessage> {errors.name.message} </ErrorMessage>}
-          </div>
-          <div className='text-center !mt-8'>
-            <button className='px-10 py-2 bg-primary font-bold text-white rounded-lg'>
-              Save
-            </button>
-          </div>
-        </form>
-      <EmailList />
+                  {emailGroup.data.map((emailGroup: EmailGroup) => (
+                    <option value={emailGroup.id} key={emailGroup.id}>
+                      {emailGroup.name}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              {errors.groupId && <ErrorMessage> {errors.groupId.message} </ErrorMessage>}
+            </div>
+            <div>
+              <label htmlFor='email'>
+                Enter a valid email
+                <input
+                  id='name'
+                  className='w-full border outline-primary border-gray-200 p-2 rounded-md'
+                  type='name'
+                  {...register('name', { required: 'This field is required' })}
+                />
+              </label>
+              {errors.name && <ErrorMessage> {errors.name.message} </ErrorMessage>}
+            </div>
+            <div className='text-center mt-8 space-x-4'>
+              <button className='px-10 py-2 bg-primary font-bold text-white rounded-lg'>
+                Save
+              </button>
+              <button
+                onClick={clearForm}
+                type='button'
+                className='px-10 py-2  text-primary font-bold border border-primary rounded-lg'
+              >
+                Clear
+              </button>
+              </div>
+          </form>
+        <EmailList />
+        </div>
+        <ConfirmDialog
+          alert={alert}
+          setAlert={setAlert}
+          callback={handleAcceptBtn}
+        />
       </div>
-      <ConfirmDialog
-        alert={alert}
-        setAlert={setAlert}
-        callback={handleAcceptBtn}
-      />
-    </div>
-  );
+    );
+  }
 }
