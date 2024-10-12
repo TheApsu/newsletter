@@ -1,35 +1,42 @@
-import ConfirmDialog from '@/components/ConfirmDialog';
-import { DeleteItem } from '@/types/index';
-import {
-  EnvelopeIcon,
-  MagnifyingGlassIcon,
-  PencilSquareIcon,
-  TrashIcon,
-} from '@heroicons/react/24/outline';
-
-import { Pagination } from '@mui/material';
-import { useState } from 'react';
+import { useMutation } from '@tanstack/react-query';
 import EmailTemplateContent from './components/EmailTemplateContent';
 import EmailTemplateEditable from './components/EmailTemplateEditable';
+import EmailGroupList from './components/EmailGroupList';
+import { createTemplate } from '@/api/EmailTemplateApi';
+import { useForm } from 'react-hook-form';
+import ErrorMessage from '@/components/ErrorMessage';
+import { useAppStore } from '@/stores/useAppStore';
 
 export default function EmailTemplatePage() {
-  const [alert, setAlert] = useState<DeleteItem>({
-    id: undefined,
-    show: false,
+  const getDataAsJSON = useAppStore((store) => store.getDataAsJSON);
+
+  const { mutate: mutateCreation } = useMutation({
+    mutationFn: createTemplate,
+    onSuccess: (data) => {
+      console.log(data);
+    },
+    onError: (err) => {
+      console.log(err.message);
+    },
   });
 
-  const handleAcceptBtn = () => {
-    setAlert({
-      id: undefined,
-      show: false,
-    });
-  };
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm({
+    defaultValues: {
+      name: '',
+    },
+  });
 
-  const handleDeleteBtn = (id: number) => {
-    setAlert({
-      id,
-      show: true,
-    });
+  const handleForm = (formData: { name: string }) => {
+    const data = {
+      ...formData,
+      data: getDataAsJSON(),
+      content: document.getElementById('templateContent')!.innerHTML,
+    };
+    mutateCreation(data);
   };
 
   return (
@@ -37,20 +44,25 @@ export default function EmailTemplatePage() {
       <h2 className='text-4xl text-primary font-bold'>Template Mail </h2>
       <p className='text-xl'>Create or edit some resource</p>
       <div className='grid grid-cols-3 gap-4 mt-8 '>
-        <form className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit'>
+        <form
+          onSubmit={handleSubmit(handleForm)}
+          className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit'
+        >
           <label htmlFor='name'>
             Template Name
             <input
               type='text'
               id='name'
               className='w-full border outline-primary border-gray-200 p-2 rounded-md'
+              {...register('name', { required: 'This filed is required' })}
             />
           </label>
-          <div className='grid grid-cols-2 mt-4 gap-4'>
-            <div>
+          {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
+          <div className='grid grid-cols-2 mt-4 gap-4 '>
+            <div className='relative'>
               <EmailTemplateEditable />
             </div>
-            <div>
+            <div id='templateContent'>
               <EmailTemplateContent />
             </div>
           </div>
@@ -60,55 +72,8 @@ export default function EmailTemplatePage() {
             </button>
           </div>
         </form>
-        <div className='shadow-md bg-white rounded-lg p-6 overflow-auto max-h-[calc(100vh-150px)] h-fit'>
-          <div>
-            <label htmlFor='groupSearch'>Search</label>
-            <div className='border outline-primary border-gray-200 p-2 rounded-md flex gap-2'>
-              <MagnifyingGlassIcon className='w-6' />
-              <input
-                type='text'
-                id='groupSearch'
-                className='w-full outline-none border-none'
-                placeholder='Search by group name'
-              />
-            </div>
-          </div>
-          <div className='mt-4 space-y-2  overflow-auto'>
-            <div className='item flex justify-between p-3 items-center border-gray-300 border rounded-lg '>
-              <div className='flex gap-4 items-center'>
-                <EnvelopeIcon className='w-6' />
-                <p>Follow Up</p>
-              </div>
-              <div className='space-x-2'>
-                <button className='rounded-full p-2 hover:bg-primary hover:text-white transition-colors'>
-                  <PencilSquareIcon className='w-5' />
-                </button>
-                <button
-                  onClick={() => handleDeleteBtn(10)}
-                  className='rounded-full p-2 hover:bg-red-500 hover:text-white transition-colors'
-                >
-                  <TrashIcon className='w-5' />
-                </button>
-              </div>
-            </div>
-            <div className='flex justify-center'>
-              <Pagination
-                onChange={() => {}}
-                count={46}
-                size='small'
-                className='text-sm'
-                variant='outlined'
-                shape='rounded'
-              />
-            </div>
-          </div>
-        </div>
+        <EmailGroupList />
       </div>
-      <ConfirmDialog
-        alert={alert}
-        setAlert={setAlert}
-        callback={handleAcceptBtn}
-      />
     </div>
   );
 }

@@ -8,6 +8,7 @@ export type EmailTemplateType = {
   content: string;
   endContent: EndContent;
   listCard: TemplateCard[];
+  footer: Footer;
   // ACTIONS
   setHeader: (data: Header) => void;
   setLogo: (data: FileResponse) => void;
@@ -22,6 +23,24 @@ export type EmailTemplateType = {
   setListCardButtonHref: (data: string, index: number) => void;
   addOtherCardToList: () => void;
   removeCardFromList: (index: number) => void;
+  setFooter: (
+    property:
+      | 'title'
+      | 'buttons'
+      | 'href'
+      | 'location'
+      | 'locationButtons'
+      | 'locationHref',
+    value: string,
+    btnIndex?: number
+  ) => void;
+  getDataAsJSON: () => string;
+};
+
+type Footer = Header & {
+  buttons: ButtonCard[];
+  location: string;
+  locationButtons: ButtonCard[];
 };
 
 type EndContent = {
@@ -98,7 +117,49 @@ export const createEmailTemplateSlice: StateCreator<
       },
     },
   ],
-
+  footer: {
+    title: 'Your Property is Our Priority!',
+    backgroundColor: 'rgb(254, 103, 0)',
+    fontColor: 'rgb(255, 255, 255)',
+    location: '1000 5TH Street. Suite 226. Miami Beach, FL.',
+    locationButtons: [
+      {
+        title: 'Privacy policy',
+        fontColor: '#888',
+        href: 'https://ipcmiamibeach.com/privacy-policy',
+      },
+      {
+        title: 'Contact us',
+        fontColor: '#888',
+        href: 'https://ipcmiamibeach.com/contact/',
+      },
+      {
+        title: 'Unsubscribe',
+        fontColor: '#888',
+        href: 'http://ipcmiamibeach.com',
+      },
+    ],
+    buttons: [
+      {
+        title: 'Telephone',
+        backgroundColor: 'rgb(0, 0, 0)',
+        fontColor: 'rgb(255, 255, 255)',
+        href: 'tel:+13055354265',
+      },
+      {
+        title: 'Email',
+        backgroundColor: 'rgb(0, 0, 0)',
+        fontColor: 'rgb(255, 255, 255)',
+        href: 'mailto:info@ipcmiamibeach.com',
+      },
+      {
+        title: 'WhatsApp',
+        backgroundColor: 'rgb(0, 0, 0)',
+        fontColor: 'rgb(255, 255, 255)',
+        href: 'https://wa.me/13055354265?text=Hello,%20how%20can%20we%20help%20you?',
+      },
+    ],
+  },
   setHeader: (data) => {
     set({
       header: {
@@ -230,5 +291,57 @@ export const createEmailTemplateSlice: StateCreator<
     set({
       listCard: get().listCard.filter((_, Sindex) => Sindex != index),
     });
+  },
+  setFooter: (property, value, btnIndex) => {
+    if (property === 'title' || property === 'location') {
+      set({
+        footer: {
+          ...get().footer,
+          [property]: value,
+        },
+      });
+    } else if (property === 'buttons' || property === 'locationButtons') {
+      set({
+        footer: {
+          ...get().footer,
+          [property]: [
+            ...get().footer[property].map((button, index) => {
+              if (index === btnIndex) {
+                button.title = value;
+              }
+              return button;
+            }),
+          ],
+        },
+      });
+    } else if (property === 'href' || property === 'locationHref') {
+      const parsedProperty =
+        property === 'href' ? 'buttons' : 'locationButtons';
+      set({
+        footer: {
+          ...get().footer,
+          [parsedProperty]: [
+            ...get().footer[parsedProperty].map((button, index) => {
+              if (index === btnIndex) {
+                button.href = value;
+              }
+              return button;
+            }),
+          ],
+        },
+      });
+    }
+  },
+  getDataAsJSON: () => {
+    const data = {
+      header: get().header,
+      logo: get().logo,
+      mainImage: get().mainImage,
+      content: get().content,
+      endContent: get().endContent,
+      listCard: get().listCard,
+      footer: get().footer,
+    };
+    return JSON.stringify(data);
   },
 });

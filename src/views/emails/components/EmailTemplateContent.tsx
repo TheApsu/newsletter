@@ -7,6 +7,7 @@ export default function EmailTemplateContent() {
   const content = useAppStore((store) => store.content);
   const endContent = useAppStore((store) => store.endContent);
   const listCard = useAppStore((store) => store.listCard);
+  const footer = useAppStore((store) => store.footer);
 
   return (
     <>
@@ -165,76 +166,46 @@ export default function EmailTemplateContent() {
         <div
           style={{
             alignItems: 'center',
-            background: '#fe6700',
+            background: footer.backgroundColor,
             borderRadius: 5,
             padding: '30px 0px',
           }}
         >
           <h2
             style={{
-              color: '#fff',
+              color: footer.fontColor,
               fontSize: 24,
               marginBottom: 20,
               fontFamily: 'Georgia, "Times New Roman", Times, serif',
               fontWeight: 100,
             }}
           >
-            Your Property is Our Priority!
+            {footer.title}
           </h2>
           <div style={{ margin: '20px 0', marginTop: 40 }}>
-            <a
-              href='tel:+13055354265'
-              style={{
-                backgroundColor: '#000',
-                color: '#ffffff',
-                padding: '12px 17px',
-                border: 'none',
-                borderRadius: '15rem',
-                fontSize: 14,
-                cursor: 'pointer',
-                textDecoration: 'none',
-                margin: 5,
-                fontFamily: 'corbel, "sans-serif" !important',
-              }}
-            >
-              Telephone
-            </a>
-            <a
-              href='mailto:info@ipcmiamibeach.com'
-              target='_blank'
-              style={{
-                backgroundColor: '#000',
-                color: '#ffffff',
-                padding: '12px 17px',
-                border: 'none',
-                borderRadius: '15rem',
-                fontSize: 14,
-                cursor: 'pointer',
-                textDecoration: 'none',
-                margin: 5,
-                fontFamily: 'corbel, "sans-serif" !important',
-              }}
-            >
-              Email
-            </a>
-            <a
-              href='https://wa.me/13055354265?text=Hello,%20how%20can%20we%20help%20you?'
-              target='_blank'
-              style={{
-                backgroundColor: '#000',
-                color: '#ffffff',
-                padding: '12px 17px',
-                border: 'none',
-                borderRadius: '15rem',
-                fontSize: 14,
-                cursor: 'pointer',
-                textDecoration: 'none',
-                margin: 5,
-                fontFamily: 'corbel, "sans-serif" !important',
-              }}
-            >
-              WhatsApp
-            </a>
+            {footer.buttons.map(
+              (button, index) =>
+                button.title && (
+                  <a
+                    key={index}
+                    href={button.href}
+                    style={{
+                      backgroundColor: button.backgroundColor,
+                      color: button.fontColor,
+                      padding: '12px 17px',
+                      border: 'none',
+                      borderRadius: '15rem',
+                      fontSize: 14,
+                      cursor: 'pointer',
+                      textDecoration: 'none',
+                      margin: 5,
+                      fontFamily: 'corbel, "sans-serif" !important',
+                    }}
+                  >
+                    {button.title}
+                  </a>
+                )
+            )}
           </div>
         </div>
       </div>
@@ -250,29 +221,19 @@ export default function EmailTemplateContent() {
         }}
       >
         <h3 style={{ fontSize: 20, marginBottom: 10 }}>IPC MIAMI BEACH</h3>
-        <p style={{ color: '#888', fontSize: 12 }}>
+        {footer.locationButtons.map((button, index) => (
           <a
-            href='https://ipcmiamibeach.com/privacy-policy'
+            key={index}
+            style={{ color: button.fontColor, fontSize: 12 }}
+            href={button.href}
             target='_blank'
             rel='noopener noreferrer'
           >
-            Privacy policy
+            {button.title} {index + 1 < footer.locationButtons.length && '|'}{' '}
           </a>
-          |
-          <a href='https://ipcmiamibeach.com/contact/' target='_blank'>
-            Contact us
-          </a>
-          |
-          <a
-            href='http://ipcmiamibeach.com'
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Unsubscribe
-          </a>
-        </p>
+        ))}
         <p style={{ color: '#888', fontSize: 12, marginBottom: 5 }}>
-          1000 5TH Street. Suite 226. Miami Beach, FL.
+          {footer.location}
         </p>
         <p style={{ color: '#888', fontSize: 10 }}>
           COPYRIGHT 2024 - ALL RIGHTS RESERVED

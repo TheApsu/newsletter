@@ -55,7 +55,7 @@ export default function EmailTemplateEditableCards() {
 
   return (
     <div className='space-y-4'>
-      <h4 className='font-bold'>Click to Action Cards</h4>
+      <h4 className='font-bold text-2xl text-center'>Click to Action Cards</h4>
       {listCard.map((card, index) => (
         <div key={index} className='space-y-4'>
           <div className='flex justify-between'>
