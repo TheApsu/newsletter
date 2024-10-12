@@ -28,6 +28,21 @@ export const getAllGroups = async (
   }
 };
 
+export const getAllGroupsNotPaginate = async (
+  params: IndexQueryFilters
+): Promise<EmailGroup | undefined> => {
+  try {
+    const { data } = await api('/emailGroups/all', {
+      params,
+    });
+    return data.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.errors);
+    }
+  }
+};
+
 export const createEmailGroup = async (formData: CreateEmailGroup) => {
   try {
     const { data } = await api.post('/emailGroups/create', formData);
@@ -56,7 +71,6 @@ export const updateEmailGroup = async (formData: EmailGroup) => {
       `/emailGroups/update/${formData.id}`,
       formData
     );
-    console.log(data);
     return data;
   } catch (error) {
     if (isAxiosError(error) && error.response) {

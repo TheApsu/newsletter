@@ -9,6 +9,11 @@ export const emailGroupSchema = z.object({
   id: z.string(),
   name: z.string(),
 });
+export const emailSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  groupId: z.string()
+});
 
 export const userSchema = z.object({
   email: z.string().nullable(),
@@ -27,6 +32,7 @@ export type IndexQueryFilters = {
 };
 export type User = z.infer<typeof userSchema>;
 export type EmailGroup = z.infer<typeof emailGroupSchema>;
+export type Email = z.infer<typeof emailSchema>;
 export type FileResponse = z.infer<typeof fileSchema>;
 
 export type DeleteItem = {

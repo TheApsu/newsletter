@@ -6,6 +6,7 @@ import {
   EmailTemplateType,
 } from './emailTemplateSlice';
 import { createEmailGroupSlice, EmailGroupType } from './emailGroupSlice';
+import { createEmailSlice, EmailType } from './emailSlice';
 
 export const useAppStore = create<UserSliceType & EmailTemplateType>()(
   devtools((...a) => ({
@@ -17,5 +18,11 @@ export const useAppStore = create<UserSliceType & EmailTemplateType>()(
 export const emailGroupAppStore = create<EmailGroupType>()(
   devtools((...a) => ({
     ...createEmailGroupSlice(...a),
+  }))
+);
+
+export const emailAppStore = create<EmailType>()(
+  devtools((...a) => ({
+    ...createEmailSlice(...a),
   }))
 );
