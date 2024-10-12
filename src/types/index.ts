@@ -30,7 +30,7 @@ export type EmailGroup = z.infer<typeof emailGroupSchema>;
 export type FileResponse = z.infer<typeof fileSchema>;
 
 export type DeleteItem = {
-  id?: number;
+  id?: string;
   show: boolean;
 };
 

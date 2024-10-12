@@ -38,3 +38,42 @@ export const createEmailGroup = async (formData: CreateEmailGroup) => {
     }
   }
 };
+
+export const deleteEmailGroup = async (id: EmailGroup['id']) => {
+  try {
+    const { data } = await api.delete(`/emailGroups/deleted/${id}`);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.errors);
+    }
+  }
+};
+
+export const updateEmailGroup = async (formData: EmailGroup) => {
+  try {
+    const { data } = await api.put(
+      `/emailGroups/update/${formData.id}`,
+      formData
+    );
+    console.log(data);
+    return data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.errors);
+    }
+  }
+};
+
+export const getEmailGroup = async (
+  id: EmailGroup['id']
+): Promise<EmailGroup | undefined> => {
+  try {
+    const { data } = await api(`/emailGroups/show/${id}`);
+    return data.data;
+  } catch (error) {
+    if (isAxiosError(error) && error.response) {
+      throw new Error(error.response.data.errors);
+    }
+  }
+};

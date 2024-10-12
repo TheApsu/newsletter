@@ -22,10 +22,7 @@ api.interceptors.request.use(
       tokens.client &&
       tokens.uid
     ) {
-      config.headers['access-token'] = tokens['access-token'];
       config.headers['Authorization'] = `bearer ${tokens['access-token']}`;
-      config.headers.client = tokens.client;
-      config.headers.uid = tokens.uid;
     }
     return config;
   },
