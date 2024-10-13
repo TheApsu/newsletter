@@ -9,7 +9,7 @@ import GroupEmailsPage from './views/emails/GroupEmailsPage';
 import EmailsPage from './views/emails/EmailsPage';
 import EmailTemplatePage from './views/emails/EmailTemplatePage';
 import SendEmailPage from './views/emails/SendEmailPage';
-import UnsubscribePage from './views/unsubscribe/Unsubscribepage';
+import UnsubscribePage from './views/unsubscribe/UnsubscribePage';
 
 // PAGES AND LAYOUT
 
