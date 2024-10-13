@@ -28,11 +28,10 @@ export default function EmailsPage() {
   } = useForm<CreateEmail>({
     defaultValues: {
       name: '',
-      groupId: ''
+      groupId: '',
     },
   });
 
-  
   useEffect(() => {
     if (email) {
       setValue('name', email.name);
@@ -58,7 +57,7 @@ export default function EmailsPage() {
   // console.log('emailGroup :>> ', emailGroup);
   const { data: emailGroup } = useQuery({
     queryKey: ['emailGroups'],
-    queryFn: () => getAllGroups({pag: 1}),
+    queryFn: () => getAllGroups({ pag: 1 }),
     refetchOnWindowFocus: false,
   });
   // let emailGroup = []
@@ -66,7 +65,7 @@ export default function EmailsPage() {
   //   emailGroup = data.data
   // }
   // console.log('data :>> ', data);
-  
+
   const { mutate } = useMutation({
     mutationFn: createEmail,
     onSuccess: () => {
@@ -115,16 +114,21 @@ export default function EmailsPage() {
         <h2 className='text-4xl text-primary font-bold'>Emails </h2>
         <p className='text-xl'>Create or edit some resource</p>
         <div className='grid grid-cols-3 gap-4 mt-8'>
-          <form onSubmit={handleSubmit(handleForm)} className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit space-y-4'>
+          <form
+            onSubmit={handleSubmit(handleForm)}
+            className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit space-y-4'
+          >
             <div>
               <label htmlFor='groupId'>
                 Select a Group
                 <select
                   id='groupId'
                   className='w-full border outline-primary border-gray-200 p-2 rounded-md'
-                  {...register('groupId', { required: 'This field is required' })}
+                  {...register('groupId', {
+                    required: 'This field is required',
+                  })}
                 >
-                  <option value='' selected disabled>
+                  <option value='' disabled>
                     Select an Option
                   </option>
                   {emailGroup.data.map((emailGroup: EmailGroup) => (
@@ -134,7 +138,9 @@ export default function EmailsPage() {
                   ))}
                 </select>
               </label>
-              {errors.groupId && <ErrorMessage> {errors.groupId.message} </ErrorMessage>}
+              {errors.groupId && (
+                <ErrorMessage> {errors.groupId.message} </ErrorMessage>
+              )}
             </div>
             <div>
               <label htmlFor='email'>
@@ -146,7 +152,9 @@ export default function EmailsPage() {
                   {...register('name', { required: 'This field is required' })}
                 />
               </label>
-              {errors.name && <ErrorMessage> {errors.name.message} </ErrorMessage>}
+              {errors.name && (
+                <ErrorMessage> {errors.name.message} </ErrorMessage>
+              )}
             </div>
             <div className='text-center mt-8 space-x-4'>
               <button className='px-10 py-2 bg-primary font-bold text-white rounded-lg'>
@@ -159,9 +167,9 @@ export default function EmailsPage() {
               >
                 Clear
               </button>
-              </div>
+            </div>
           </form>
-        <EmailList />
+          <EmailList />
         </div>
         <ConfirmDialog
           alert={alert}

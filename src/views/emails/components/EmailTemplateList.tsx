@@ -1,18 +1,21 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import { deleteEmail, getEmail } from '@/api/EmailApi';
 import { DeleteItem, IndexQueryFilters } from '@/types/index';
 import Spinner from '@/components/Spinner';
 import { toast } from 'react-toastify';
-import { emailAppStore } from '@/stores/useAppStore';
+import { useAppStore } from '@/stores/useAppStore';
 import SearcherTemplate from './SearcherTemplate';
-import { getAllTemplates } from '@/api/EmailTemplateApi';
+import {
+  deleteEmailTemplate,
+  getAllTemplates,
+  getEmailTemplate,
+} from '@/api/EmailTemplateApi';
 
-export default function EmailList() {
-  const setEmail = emailAppStore((store) => store.setEmail);
-  const editingId = emailAppStore((store) => store.editingId);
-  const setEditingId = emailAppStore((store) => store.setEditingId);
+export default function EmailTemplateList() {
+  const setEmail = useAppStore((store) => store.setEmail);
+  const editingId = useAppStore((store) => store.editingId);
+  const setEditingId = useAppStore((store) => store.setEditingId);
 
   const [filters, setFilters] = useState<IndexQueryFilters>({
     name: '',
@@ -25,6 +28,7 @@ export default function EmailList() {
     queryFn: () => getAllTemplates(filters),
     refetchOnWindowFocus: false,
   });
+  console.log(data);
 
   const [alert, setAlert] = useState<DeleteItem>({
     id: undefined,
@@ -32,7 +36,7 @@ export default function EmailList() {
   });
 
   const { mutate } = useMutation({
-    mutationFn: deleteEmail,
+    mutationFn: deleteEmailTemplate,
     onSuccess: (data) => {
       console.log(data);
       setAlert({
@@ -49,7 +53,7 @@ export default function EmailList() {
 
   const { data: email } = useQuery({
     queryKey: ['templates', editingId],
-    queryFn: () => getEmail(editingId!),
+    queryFn: () => getEmailTemplate(editingId!),
     enabled: editingId !== undefined,
   });
 

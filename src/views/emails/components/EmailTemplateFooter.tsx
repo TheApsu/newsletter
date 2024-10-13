@@ -14,6 +14,7 @@ export default function EmailTemplateFooter() {
     if (name === 'title' || name === 'location') {
       setFooter(name, value);
     } else if (
+      name === 'buttons' ||
       name === 'locationButtons' ||
       name === 'href' ||
       name === 'locationHref'
@@ -37,7 +38,7 @@ export default function EmailTemplateFooter() {
       </label>
 
       {footer.buttons.map((button, index) => (
-        <div className='flex gap-4'>
+        <div className='flex gap-4' key={index}>
           <label htmlFor='' className='block flex-1'>
             Button {index + 1}
             <input
@@ -74,7 +75,7 @@ export default function EmailTemplateFooter() {
         />
       </label>
       {footer.locationButtons.map((button, index) => (
-        <div className='flex gap-4'>
+        <div className='flex gap-4' key={index}>
           <label htmlFor='' className='block flex-1'>
             Button {index + 1}
             <input

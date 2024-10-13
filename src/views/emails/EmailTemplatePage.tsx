@@ -1,34 +1,65 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import EmailTemplateContent from './components/EmailTemplateContent';
 import EmailTemplateEditable from './components/EmailTemplateEditable';
-import EmailGroupList from './components/EmailGroupList';
-import { createTemplate } from '@/api/EmailTemplateApi';
+import { createTemplate, updateTemplate } from '@/api/EmailTemplateApi';
 import { useForm } from 'react-hook-form';
 import ErrorMessage from '@/components/ErrorMessage';
 import { useAppStore } from '@/stores/useAppStore';
+import EmailTemplateList from './components/EmailTemplateList';
+import { useEffect } from 'react';
+import { toast } from 'react-toastify';
 
 export default function EmailTemplatePage() {
+  const editingId = useAppStore((store) => store.editingId);
+  const name = useAppStore((store) => store.name);
+  const resetTemplate = useAppStore((store) => store.resetTemplate);
   const getDataAsJSON = useAppStore((store) => store.getDataAsJSON);
+
+  const queryClient = useQueryClient();
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+    setValue,
+    reset,
+  } = useForm({
+    defaultValues: {
+      name: '',
+    },
+  });
 
   const { mutate: mutateCreation } = useMutation({
     mutationFn: createTemplate,
-    onSuccess: (data) => {
-      console.log(data);
+    onSuccess: () => {
+      toast.success('Created Succesfully');
+      reset();
+      handleClearForm(true);
     },
     onError: (err) => {
       console.log(err.message);
     },
   });
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm({
-    defaultValues: {
-      name: '',
+  const { mutate: mutateUpdate } = useMutation({
+    mutationFn: updateTemplate,
+    onSuccess: () => {
+      toast.success('Updated Succesfully');
+      handleClearForm(true);
+    },
+    onError: (err) => {
+      console.log(err.message);
     },
   });
+
+  useEffect(() => {
+    if (name) {
+      console.log('?');
+      setTimeout(() => {
+        setValue('name', name);
+      });
+    }
+  }, [name]);
 
   const handleForm = (formData: { name: string }) => {
     const data = {
@@ -36,7 +67,22 @@ export default function EmailTemplatePage() {
       data: getDataAsJSON(),
       content: document.getElementById('templateContent')!.innerHTML,
     };
-    mutateCreation(data);
+
+    if (editingId) {
+      mutateUpdate({ ...data, id: editingId });
+    } else {
+      mutateCreation(data);
+    }
+  };
+
+  const handleClearForm = (clearTemplateQuery: boolean = false) => {
+    queryClient.invalidateQueries({ queryKey: ['templates', editingId] });
+    if (clearTemplateQuery) {
+      queryClient.invalidateQueries({ queryKey: ['templates'] });
+    }
+
+    reset();
+    resetTemplate();
   };
 
   return (
@@ -66,13 +112,20 @@ export default function EmailTemplatePage() {
               <EmailTemplateContent />
             </div>
           </div>
-          <div className='text-center mt-8'>
+          <div className='text-center mt-8 space-x-4'>
             <button className='px-10 py-2 bg-primary font-bold text-white rounded-lg'>
               Save
             </button>
+            <button
+              type='button'
+              onClick={() => handleClearForm()}
+              className='px-10 py-2  text-primary font-bold border border-primary rounded-lg'
+            >
+              Clear Form
+            </button>
           </div>
         </form>
-        <EmailGroupList />
+        <EmailTemplateList />
       </div>
     </div>
   );

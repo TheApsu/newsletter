@@ -7,6 +7,7 @@ export type UserSliceType = {
   loadingUser: boolean;
   setUser: (data: User) => void;
   getUser: () => void;
+  logout: () => void;
 };
 
 const getLocalUser = (user: User | undefined) => {
@@ -53,5 +54,12 @@ export const createUserSlice: StateCreator<
   setUser: (data) => {
     localStorage.setItem('user', JSON.stringify(data));
     set({ user: data });
+  },
+  logout: () => {
+    localStorage.removeItem('user');
+    set({
+      user: getLocalUser(undefined),
+      loadingUser: false,
+    });
   },
 });

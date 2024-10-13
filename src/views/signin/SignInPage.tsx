@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
@@ -41,10 +41,11 @@ export default function SignInPage({ uid }: SignInPageProps) {
     },
   });
 
+  const location = useLocation();
   const handleForm = (data: AuthSignIn) => mutate(data);
 
   if (uid) {
-    return <Navigate to='/' />;
+    return <Navigate to={location.state.prevPath} />;
   }
 
   return (

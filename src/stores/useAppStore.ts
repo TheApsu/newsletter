@@ -26,3 +26,9 @@ export const emailAppStore = create<EmailType>()(
     ...createEmailSlice(...a),
   }))
 );
+
+// export const sendEmailStore = create<>()(
+//   devtools((...a) => ({
+//     ...createEmailSlice(...a),
+//   }))
+// );

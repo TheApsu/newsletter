@@ -1,5 +1,6 @@
 import { StateCreator } from 'zustand';
 import { FileResponse } from '@/types/index';
+import { EmailTemplateApi, EmailTemplateItem } from '@/api/EmailTemplateApi';
 
 export type EmailTemplateType = {
   header: Header;
@@ -10,6 +11,10 @@ export type EmailTemplateType = {
   listCard: TemplateCard[];
   footer: Footer;
   // ACTIONS
+  name: string;
+  editingId?: string;
+  setEmail: (email: EmailTemplateItem) => void;
+  setEditingId: (id: EmailTemplateApi['id']) => void;
   setHeader: (data: Header) => void;
   setLogo: (data: FileResponse) => void;
   setMainImage: (data: FileResponse) => void;
@@ -35,6 +40,7 @@ export type EmailTemplateType = {
     btnIndex?: number
   ) => void;
   getDataAsJSON: () => string;
+  resetTemplate: () => void;
 };
 
 type Footer = Header & {
@@ -72,6 +78,8 @@ export const createEmailTemplateSlice: StateCreator<
   [],
   EmailTemplateType
 > = (set, get) => ({
+  name: '',
+  editingId: undefined,
   header: {
     fontColor: '#fff',
     backgroundColor: '#0fa49f',
@@ -343,5 +351,77 @@ export const createEmailTemplateSlice: StateCreator<
       footer: get().footer,
     };
     return JSON.stringify(data);
+  },
+  setEditingId: (editingId) => {
+    set({
+      editingId,
+    });
+  },
+  setEmail: (email) => {
+    const parsedJSON = JSON.parse(email.data);
+    set({
+      name: email.name,
+      ...parsedJSON,
+    });
+    console.log('hola', email);
+  },
+  resetTemplate: () => {
+    set({
+      name: '',
+      editingId: '',
+      header: {
+        title: '',
+        backgroundColor: '#0fa49f',
+        fontColor: '#fff',
+      },
+      logo: '',
+      mainImage: '',
+      content: '',
+      endContent: { name: '', href: '' },
+      listCard: [],
+      footer: {
+        buttons: [
+          {
+            title: '',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: '',
+          },
+          {
+            title: '',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: '',
+          },
+          {
+            title: '',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: '',
+          },
+        ],
+        location: '',
+        locationButtons: [
+          {
+            title: '',
+            fontColor: '#888',
+            href: '',
+          },
+          {
+            title: '',
+            fontColor: '#888',
+            href: '',
+          },
+          {
+            title: '',
+            fontColor: '#888',
+            href: '',
+          },
+        ],
+        title: '',
+        backgroundColor: 'rgb(254, 103, 0)',
+        fontColor: 'rgb(255, 255, 255)',
+      },
+    });
   },
 });

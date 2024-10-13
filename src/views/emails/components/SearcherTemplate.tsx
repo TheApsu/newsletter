@@ -23,7 +23,7 @@ type SearcherTemplateProps = {
   handleDeleteBtn: (id: string) => void;
   handleEditBtn: (id: string) => void;
   handleAcceptBtn: () => void;
-  filter: boolean | false;
+  filter?: boolean | false;
 };
 
 export default function SearcherTemplate({
@@ -37,7 +37,7 @@ export default function SearcherTemplate({
   handleDeleteBtn,
   handleEditBtn,
   handleAcceptBtn,
-  filter
+  filter = false,
 }: SearcherTemplateProps) {
   const queryClient = useQueryClient();
   const handleChange = async (ev: ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +63,7 @@ export default function SearcherTemplate({
   };
   const { data: emailGroup } = useQuery({
     queryKey: ['emailGroups'],
-    queryFn: () => getAllGroups({pag: 1}),
+    queryFn: () => getAllGroups({ pag: 1 }),
     refetchOnWindowFocus: false,
   });
 
@@ -81,14 +81,14 @@ export default function SearcherTemplate({
               placeholder='Search by group name'
               onChange={handleChange}
             />
-            {
-              filter && emailGroup &&
+            {filter && emailGroup && (
               <select
                 id='groupId'
+                defaultValue=''
                 className='w-full border outline-primary border-gray-200 p-2 rounded-md'
                 onChange={handleSelectChange}
               >
-                <option value='' selected disabled>
+                <option value='' disabled>
                   Select an Option
                 </option>
                 {emailGroup.data.map((emailGroup: EmailGroup) => (
@@ -97,7 +97,7 @@ export default function SearcherTemplate({
                   </option>
                 ))}
               </select>
-            }
+            )}
           </div>
         </div>
         <div className='mt-4 space-y-2  overflow-auto'>

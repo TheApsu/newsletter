@@ -14,7 +14,7 @@ export type EmailGroupApi = {
 export type CreateEmailGroup = Pick<EmailGroupApi, 'name'>;
 
 export const getAllGroups = async (
-  params: IndexQueryFilters
+  params?: IndexQueryFilters
 ): Promise<EmailGroupWithMeta | undefined> => {
   try {
     const { data } = await api('/emailGroups/all', {

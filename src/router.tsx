@@ -8,6 +8,8 @@ import Layout from './layouts/Layout';
 import GroupEmailsPage from './views/emails/GroupEmailsPage';
 import EmailsPage from './views/emails/EmailsPage';
 import EmailTemplatePage from './views/emails/EmailTemplatePage';
+import SendEmailPage from './views/emails/SendEmailPage';
+import UnsubscribePage from './views/unsubscribe/Unsubscribepage';
 
 // PAGES AND LAYOUT
 
@@ -39,6 +41,14 @@ export default function AppRouter() {
             </Suspense>
           }
         />
+        <Route
+          path='/unsubscribe'
+          element={
+            <Suspense fallback='Cargando...'>
+              <UnsubscribePage />
+            </Suspense>
+          }
+        />
         <Route element={<Layout uid={user.id} />}>
           <Route
             path='/group-emails'
@@ -64,6 +74,15 @@ export default function AppRouter() {
             element={
               <Suspense fallback='Cargando...'>
                 <EmailTemplatePage />
+              </Suspense>
+            }
+          />
+          <Route
+            path='/send'
+            index
+            element={
+              <Suspense fallback='Cargando...'>
+                <SendEmailPage />
               </Suspense>
             }
           />
