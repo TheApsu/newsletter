@@ -14,6 +14,7 @@ export default function EmailTemplatePage() {
   const name = useAppStore((store) => store.name);
   const resetTemplate = useAppStore((store) => store.resetTemplate);
   const getDataAsJSON = useAppStore((store) => store.getDataAsJSON);
+  const resetToBaseTemplate = useAppStore((store) => store.resetToBaseTemplate);
 
   const queryClient = useQueryClient();
 
@@ -122,6 +123,13 @@ export default function EmailTemplatePage() {
               className='px-10 py-2  text-primary font-bold border border-primary rounded-lg'
             >
               Clear Form
+            </button>
+            <button
+              type='button'
+              onClick={resetToBaseTemplate}
+              className='px-10 py-2  text-primary font-bold border border-primary rounded-lg'
+            >
+              Reset Template
             </button>
           </div>
         </form>

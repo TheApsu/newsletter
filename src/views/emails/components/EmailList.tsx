@@ -1,11 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
-import {
-  deleteEmail,
-  getAllGroups,
-  getEmail,
-} from '@/api/EmailApi';
+import { deleteEmail, getAllGroups, getEmail } from '@/api/EmailApi';
 import { DeleteItem, IndexQueryFilters } from '@/types/index';
 import Spinner from '@/components/Spinner';
 import { toast } from 'react-toastify';
@@ -16,11 +12,13 @@ export default function EmailList() {
   const setEmail = emailAppStore((store) => store.setEmail);
   const editingId = emailAppStore((store) => store.editingId);
   const setEditingId = emailAppStore((store) => store.setEditingId);
+  const duplicate = emailAppStore((store) => store.duplicate);
+  const isDuplicating = emailAppStore((store) => store.isDuplicating);
 
   const [filters, setFilters] = useState<IndexQueryFilters>({
     name: '',
     pag: 1,
-    groupId: ''
+    groupId: '',
   });
 
   const queryClient = useQueryClient();
@@ -58,9 +56,14 @@ export default function EmailList() {
 
   useEffect(() => {
     if (email) {
+      if (isDuplicating) {
+        setEditingId(undefined, true);
+        queryClient.invalidateQueries({ queryKey: ['email', email.id] });
+        email.id = '';
+      }
       setEmail(email);
     }
-  }, [email, setEmail]);
+  }, [email]);
 
   const handleAcceptBtn = () => mutate(alert.id!);
 
@@ -73,6 +76,10 @@ export default function EmailList() {
 
   const handleEditBtn = (id: string) => {
     setEditingId(id);
+  };
+
+  const handleCopyBtn = (id: string) => {
+    duplicate(id);
   };
 
   if (isLoading) {
@@ -96,6 +103,7 @@ export default function EmailList() {
           handleAcceptBtn={handleAcceptBtn}
           handleDeleteBtn={handleDeleteBtn}
           handleEditBtn={handleEditBtn}
+          handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
           filter={true}
         />

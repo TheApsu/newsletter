@@ -6,8 +6,8 @@ import 'split-pane-react/esm/themes/default.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { User } from '../types';
-import Logo from '@/components/Logo';
 import { useAppStore } from '@/stores/useAppStore';
+import LogoHorizontal from '@/components/LogoHorizontal';
 
 type SignInPageProps = {
   uid: User['id'];
@@ -41,7 +41,11 @@ export default function Layout({ uid }: SignInPageProps) {
       >
         <Pane minSize={50}>
           <div style={{ ...layoutCSS }} className='p-4'>
-            <Logo />
+            <div className='bg-white p-4 mb-4 rounded-lg shadow-md'>
+              <div className='mx-auto '>
+                <LogoHorizontal />
+              </div>
+            </div>
             <nav className='space-y-3'>
               <NavLink
                 to='/group-emails'

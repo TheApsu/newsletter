@@ -51,20 +51,11 @@ export default function EmailsPage() {
     });
   };
 
-  // const { emailGroup: emailGroup } = useQuery({
-  //   queryFn: () => getEmailGroup(editingId!),
-  // });
-  // console.log('emailGroup :>> ', emailGroup);
   const { data: emailGroup } = useQuery({
     queryKey: ['emailGroups'],
     queryFn: () => getAllGroups({ pag: 1 }),
     refetchOnWindowFocus: false,
   });
-  // let emailGroup = []
-  // if (data?.error === null) {
-  //   emailGroup = data.data
-  // }
-  // console.log('data :>> ', data);
 
   const { mutate } = useMutation({
     mutationFn: createEmail,
@@ -88,6 +79,7 @@ export default function EmailsPage() {
     });
     reset();
   };
+
   const { mutate: updateItem } = useMutation({
     mutationFn: updateEmail,
     onSuccess: (data) => {
@@ -95,6 +87,7 @@ export default function EmailsPage() {
       toast.success('Updated Succesfully');
       clearForm();
       queryClient.invalidateQueries({ queryKey: ['emails'] });
+      queryClient.invalidateQueries({ queryKey: ['email', data.item.id] });
     },
     onError: (err) => {
       toast.error(err.message);
@@ -102,7 +95,9 @@ export default function EmailsPage() {
   });
   const handleForm = (data: CreateEmail) => {
     console.log('data :>> ', data);
+    console.log('data :>> ', email?.id);
     if (email?.id) {
+      console.log('por aqui');
       updateItem({ ...data, id: email.id });
     } else {
       mutate(data);
