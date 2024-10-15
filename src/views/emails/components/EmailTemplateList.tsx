@@ -16,6 +16,8 @@ export default function EmailTemplateList() {
   const setEmail = useAppStore((store) => store.setEmail);
   const editingId = useAppStore((store) => store.editingId);
   const setEditingId = useAppStore((store) => store.setEditingId);
+  const duplicate = useAppStore((store) => store.duplicate);
+  const isDuplicating = useAppStore((store) => store.isDuplicating);
 
   const [filters, setFilters] = useState<IndexQueryFilters>({
     name: '',
@@ -59,6 +61,11 @@ export default function EmailTemplateList() {
 
   useEffect(() => {
     if (email) {
+      if (isDuplicating) {
+        setEditingId(undefined, true);
+        queryClient.invalidateQueries({ queryKey: ['email', email.id] });
+        email.id = '';
+      }
       setEmail(email);
     }
   }, [email]);
@@ -74,6 +81,10 @@ export default function EmailTemplateList() {
 
   const handleEditBtn = (id: string) => {
     setEditingId(id);
+  };
+
+  const handleCopyBtn = (id: string) => {
+    duplicate(id);
   };
 
   if (isLoading) {
@@ -97,6 +108,7 @@ export default function EmailTemplateList() {
           handleAcceptBtn={handleAcceptBtn}
           handleDeleteBtn={handleDeleteBtn}
           handleEditBtn={handleEditBtn}
+          handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
         />
       </>

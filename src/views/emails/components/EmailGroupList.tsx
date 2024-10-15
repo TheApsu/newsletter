@@ -16,6 +16,8 @@ export default function EmailGroupList() {
   const setEmailGroup = emailGroupAppStore((store) => store.setEmailGroup);
   const editingId = emailGroupAppStore((store) => store.editingId);
   const setEditingId = emailGroupAppStore((store) => store.setEditingId);
+  const duplicate = emailGroupAppStore((store) => store.duplicate);
+  const isDuplicating = emailGroupAppStore((store) => store.isDuplicating);
 
   const [filters, setFilters] = useState<IndexQueryFilters>({
     name: '',
@@ -28,6 +30,10 @@ export default function EmailGroupList() {
     queryFn: () => getAllGroups(filters),
     refetchOnWindowFocus: false,
   });
+
+  const handleCopyBtn = (id: string) => {
+    duplicate(id);
+  };
 
   const [alert, setAlert] = useState<DeleteItem>({
     id: undefined,
@@ -58,6 +64,11 @@ export default function EmailGroupList() {
 
   useEffect(() => {
     if (emailGroup) {
+      if (isDuplicating) {
+        setEditingId(undefined, true);
+        queryClient.invalidateQueries({ queryKey: ['email', emailGroup.id] });
+        emailGroup.id = '';
+      }
       setEmailGroup(emailGroup);
     }
   }, [emailGroup]);
@@ -96,6 +107,7 @@ export default function EmailGroupList() {
           handleAcceptBtn={handleAcceptBtn}
           handleDeleteBtn={handleDeleteBtn}
           handleEditBtn={handleEditBtn}
+          handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
         />
       </>

@@ -2,6 +2,7 @@ import ConfirmDialog from '@/components/ConfirmDialog';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { DeleteItem, EmailGroup, IndexQueryFilters, Meta } from '@/types/index';
 import {
+  DocumentDuplicateIcon,
   EnvelopeIcon,
   MagnifyingGlassIcon,
   PencilSquareIcon,
@@ -23,6 +24,7 @@ type SearcherTemplateProps = {
   handleDeleteBtn: (id: string) => void;
   handleEditBtn: (id: string) => void;
   handleAcceptBtn: () => void;
+  handleCopyBtn: (id: string) => void;
   filter?: boolean | false;
 };
 
@@ -37,9 +39,11 @@ export default function SearcherTemplate({
   handleDeleteBtn,
   handleEditBtn,
   handleAcceptBtn,
+  handleCopyBtn,
   filter = false,
 }: SearcherTemplateProps) {
   const queryClient = useQueryClient();
+
   const handleChange = async (ev: ChangeEvent<HTMLInputElement>) => {
     const value = await handleChangeDebounce(ev);
     setFilters({
@@ -50,6 +54,7 @@ export default function SearcherTemplate({
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     }, 100);
   };
+
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     setFilters({
@@ -61,6 +66,7 @@ export default function SearcherTemplate({
     }, 100);
     // Llama a la función que necesitas aquí
   };
+
   const { data: emailGroup } = useQuery({
     queryKey: ['emailGroups'],
     queryFn: () => getAllGroups({ pag: 1 }),
@@ -101,24 +107,30 @@ export default function SearcherTemplate({
           </div>
         </div>
         <div className='mt-4 space-y-2  overflow-auto'>
-          {data.map((group) => (
+          {data.map((item) => (
             <div
-              key={group.id}
+              key={item.id}
               className='item flex justify-between p-3 items-center border-gray-300 border rounded-lg '
             >
               <div className='flex gap-4 items-center'>
                 <EnvelopeIcon className='w-6' />
-                <p>{group.name}</p>
+                <p>{item.name}</p>
               </div>
               <div className='space-x-2'>
                 <button
-                  onClick={() => handleEditBtn(group.id)}
+                  onClick={() => handleEditBtn(item.id)}
                   className='rounded-full p-2 hover:bg-primary hover:text-white transition-colors'
                 >
                   <PencilSquareIcon className='w-5' />
                 </button>
                 <button
-                  onClick={() => handleDeleteBtn(group.id)}
+                  onClick={() => handleCopyBtn(item.id)}
+                  className='rounded-full p-2 hover:bg-secondary hover:text-white transition-colors'
+                >
+                  <DocumentDuplicateIcon className='w-5' />
+                </button>
+                <button
+                  onClick={() => handleDeleteBtn(item.id)}
                   className='rounded-full p-2 hover:bg-red-500 hover:text-white transition-colors'
                 >
                   <TrashIcon className='w-5' />

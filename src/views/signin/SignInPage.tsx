@@ -9,6 +9,7 @@ import { AuthSignIn, User } from '@/types/index';
 import ErrorMessage from '@/components/ErrorMessage';
 import { useAppStore } from '@/stores/useAppStore';
 import { signIn } from '@/api/AuthApi';
+import Logo from '@/components/Logo';
 
 type SignInPageProps = {
   uid: User['id'];
@@ -25,8 +26,8 @@ export default function SignInPage({ uid }: SignInPageProps) {
         setUser(data);
       }
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: () => {
+      toast.error('Incorrect email or password');
     },
   });
 
@@ -51,13 +52,16 @@ export default function SignInPage({ uid }: SignInPageProps) {
   return (
     <div className='min-h-screen flex justify-center items-center bg-gray-100'>
       <div className='min-w-[450px]'>
-        <h2 className='text-4xl text-primary text-center font-black'>Login</h2>
+        <h2 className='text-3xl text-primary text-center font-black'>Login</h2>
         <p className='text-center'>Enter your details to sign in.</p>
         <form
           onSubmit={handleSubmit(handleForm)}
-          className='container mt-8 mx-auto space-y-6 bg-white p-16 rounded-lg shadow-lg'
+          className='container mt-8 mx-auto space-y-6 bg-white p-16 pt-8 rounded-lg shadow-lg'
           noValidate
         >
+          <div className='w-40 mb-8 flex m-auto'>
+            <Logo />
+          </div>
           <div>
             <div className='flex rounded-md border border-gray-200 pl-2 gap-2 overflow-hidden'>
               <UserIcon className='w-6' />
