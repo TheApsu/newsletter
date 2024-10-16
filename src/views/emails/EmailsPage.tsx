@@ -108,10 +108,10 @@ export default function EmailsPage() {
       <div className='container mx-auto px-8'>
         <h2 className='text-4xl text-primary font-bold'>Emails </h2>
         <p className='text-xl'>Create or edit some resource</p>
-        <div className='grid grid-cols-3 gap-4 mt-8'>
+        <div className='grid grid-cols-3 gap-4 mt-8 relative'>
           <form
             onSubmit={handleSubmit(handleForm)}
-            className='p-6 col-span-2 shadow-md bg-white rounded-lg h-fit space-y-4'
+            className='order-2 lg:order-1 col-span-3 lg:col-span-2 p-6  shadow-md bg-white rounded-lg  space-y-4'
           >
             <div>
               <label htmlFor='groupId'>

@@ -50,8 +50,8 @@ export default function SignInPage({ uid }: SignInPageProps) {
   }
 
   return (
-    <div className='min-h-screen flex justify-center items-center bg-gray-100'>
-      <div className='min-w-[450px]'>
+    <div className='min-h-screen flex justify-center items-center bg-gray-200'>
+      <div className='lg:min-w-[450px]'>
         <h2 className='text-3xl text-primary text-center font-black'>Login</h2>
         <p className='text-center'>Enter your details to sign in.</p>
         <form

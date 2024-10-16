@@ -13,6 +13,9 @@ export default {
       '5xl': '2.852rem',
     },
     extend: {
+      boxShadow: {
+        menuShadow: 'rgba(0, 0, 0, 0.1) 0px 0px 20px 0px;',
+      },
       colors: {
         fontColor: '#626262',
         primary: '#02a194',

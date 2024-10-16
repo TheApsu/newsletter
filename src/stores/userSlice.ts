@@ -57,6 +57,7 @@ export const createUserSlice: StateCreator<
   },
   logout: () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('access-token');
     set({
       user: getLocalUser(undefined),
       loadingUser: false,
