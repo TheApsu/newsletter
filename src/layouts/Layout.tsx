@@ -83,9 +83,9 @@ export default function Layout({ uid }: SignInPageProps) {
             />
           )}
 
-          <div style={{ ...layoutCSS }} className='p-4'>
-            <div className=' p-2 mb-12'>
-              <div className='mx-auto '>
+          <div style={{ ...layoutCSS }} className='p-8 lg:p-4'>
+            <div className='p-2 mb-4 lg:mb-12'>
+              <div className='mx-auto w-[250px] lg:w-auto'>
                 <LogoHorizontal />
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function Layout({ uid }: SignInPageProps) {
             <LayoutHeader type='open' sizes={['100%', 0]} setSizes={setSizes} />
           )}
 
-          <div className='overflow-auto p-4'>
+          <div className='overflow-auto p-4 pb-16'>
             <main>
               <div className='overflow-visible'>
                 <Outlet />
