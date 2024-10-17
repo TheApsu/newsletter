@@ -144,7 +144,7 @@ export default function SearcherTemplate({
       )}
       <div
         className={`order-1 lg:order-2 shadow-md ${
-          expanded ? 'w-full h-full' : 'w-0 h-0 overflow-hidden p-0'
+          expanded ? 'w-full h-full' : 'w-0 !h-0 overflow-hidden !p-0'
         } lg:block col-span-3 lg:relative transition-all lg:col-span-1 bg-white rounded-lg p-6 overflow-auto  h-fit`}
       >
         <div>
