@@ -110,6 +110,7 @@ export default function EmailTemplateList() {
           handleEditBtn={handleEditBtn}
           handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
+          editingId={email?.id}
         />
       </>
     );

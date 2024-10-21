@@ -128,6 +128,40 @@ export const createEmailTemplateSlice: StateCreator<
         href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
       },
     },
+    {
+      image:
+        'https://api-test.laherhost.com/images/temp/1728048637154-a2da2763-b940-4194-b82b-ec47c7b200e0.jpg',
+      backgroundColor: '#e4f4f4',
+      header: {
+        title: 'What’s happening around town',
+        fontColor: '#e67e1f',
+      },
+      content: {
+        title: `As we approach the conclusion of 2024, here are some notable events and special holidays occurring in our community`,
+      },
+      button: {
+        title: 'SEE CALENDAR',
+        backgroundColor: '#4fcccc',
+        href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+      },
+    },
+    {
+      image:
+        'https://api-test.laherhost.com/images/temp/1728048653570-a135f57f-3373-4380-ae02-f2a6402e84ac.jpg',
+      backgroundColor: '#e4f4f4',
+      header: {
+        title: 'Get Ready for the Holidays in South Florida',
+        fontColor: '#e67e1f',
+      },
+      content: {
+        title: `As the holiday season approaches, South Florida offers a unique twist on traditional celebrations with its vibrant cultural diversity and tropical setting. Here’s are some suggestions for celebrating Thanksgiving, Christmas, and Hanukkah in the Magic City.`,
+      },
+      button: {
+        title: 'LEARN MORE',
+        backgroundColor: '#4fcccc',
+        href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+      },
+    },
   ],
   footer: {
     title: 'Your Property is Our Priority!',
@@ -418,6 +452,40 @@ export const createEmailTemplateSlice: StateCreator<
             href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
           },
         },
+        {
+          image:
+            'https://api-test.laherhost.com/images/temp/1728048637154-a2da2763-b940-4194-b82b-ec47c7b200e0.jpg',
+          backgroundColor: '#e4f4f4',
+          header: {
+            title: 'What’s happening around town',
+            fontColor: '#e67e1f',
+          },
+          content: {
+            title: `As we approach the conclusion of 2024, here are some notable events and special holidays occurring in our community`,
+          },
+          button: {
+            title: 'SEE CALENDAR',
+            backgroundColor: '#4fcccc',
+            href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+          },
+        },
+        {
+          image:
+            'https://api-test.laherhost.com/images/temp/1728048653570-a135f57f-3373-4380-ae02-f2a6402e84ac.jpg',
+          backgroundColor: '#e4f4f4',
+          header: {
+            title: 'Get Ready for the Holidays in South Florida',
+            fontColor: '#e67e1f',
+          },
+          content: {
+            title: `As the holiday season approaches, South Florida offers a unique twist on traditional celebrations with its vibrant cultural diversity and tropical setting. Here’s are some suggestions for celebrating Thanksgiving, Christmas, and Hanukkah in the Magic City.`,
+          },
+          button: {
+            title: 'LEARN MORE',
+            backgroundColor: '#4fcccc',
+            href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+          },
+        },
       ],
       footer: {
         title: 'Your Property is Our Priority!',
@@ -467,59 +535,129 @@ export const createEmailTemplateSlice: StateCreator<
   resetTemplate: () => {
     set({
       name: '',
-      editingId: '',
+      editingId: undefined,
       header: {
-        title: '',
-        backgroundColor: '#0fa49f',
         fontColor: '#fff',
+        backgroundColor: '#0fa49f',
+        title: 'october 2024 | Issue No. 2',
       },
-      logo: '',
-      mainImage: '',
-      content: '',
-      endContent: { name: '', href: '' },
-      listCard: [],
+      isDuplicating: false,
+      mainImage:
+        'https://api-test.laherhost.com/images/temp/1728054004070-60243282-c4fe-47be-808b-b593b07660fa.png',
+      logo: 'https://api-test.laherhost.com/images/temp/1727962689002-54d8347a-214d-437a-ae5b-f4b28ce43ba8.png',
+      content: ` Welcome to the very first
+            edition of IPC Miami Beach's newsletter! As the premier provider of
+            home management services for luxury residences and condos in Miami,
+            we are thrilled to share the latest updates, insights, and
+            maintenance tips for your exquisite properties. Our newsletter aims
+            to keep you informed and inspired, whether you're looking to boost
+            your home's value, prepare for seasonal maintenance, or explore new
+            luxury services tailored to your lifestyle.
+            
+            At IPC, our commitment is to deliver seamless and exceptional care
+            for your home, allowing you to fully enjoy all that Miami has to
+            offer. Thank you for being a valued member of the IPC family! Stay
+            with us for what’s to come and experience IPC like never before.`,
+      endContent: {
+        name: 'Join us for what’s ahead and experience IPC like never before.',
+        href: 'https://ipcmiamibeach.com',
+      },
+      listCard: [
+        {
+          image:
+            'https://api-test.laherhost.com/images/temp/1728047204131-33d9d628-c42d-446d-8587-72bfc5e47154.jpg',
+          backgroundColor: '#e4f4f4',
+          header: {
+            title: 'Welcome back - Homeowner’s checklist',
+            fontColor: '#e67e1f',
+          },
+          content: {
+            title: `To help you settle in quickly so you can begin to enjoy your
+                home, IPC has created a short checklist to follow 2.`,
+          },
+          button: {
+            title: 'READ MORE',
+            backgroundColor: '#4fcccc',
+            href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+          },
+        },
+        {
+          image:
+            'https://api-test.laherhost.com/images/temp/1728048637154-a2da2763-b940-4194-b82b-ec47c7b200e0.jpg',
+          backgroundColor: '#e4f4f4',
+          header: {
+            title: 'What’s happening around town',
+            fontColor: '#e67e1f',
+          },
+          content: {
+            title: `As we approach the conclusion of 2024, here are some notable events and special holidays occurring in our community`,
+          },
+          button: {
+            title: 'SEE CALENDAR',
+            backgroundColor: '#4fcccc',
+            href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+          },
+        },
+        {
+          image:
+            'https://api-test.laherhost.com/images/temp/1728048653570-a135f57f-3373-4380-ae02-f2a6402e84ac.jpg',
+          backgroundColor: '#e4f4f4',
+          header: {
+            title: 'Get Ready for the Holidays in South Florida',
+            fontColor: '#e67e1f',
+          },
+          content: {
+            title: `As the holiday season approaches, South Florida offers a unique twist on traditional celebrations with its vibrant cultural diversity and tropical setting. Here’s are some suggestions for celebrating Thanksgiving, Christmas, and Hanukkah in the Magic City.`,
+          },
+          button: {
+            title: 'LEARN MORE',
+            backgroundColor: '#4fcccc',
+            href: 'https://ipcmiamibeach.com/luxury-or-safety-why-not-both/',
+          },
+        },
+      ],
       footer: {
-        buttons: [
-          {
-            title: '',
-            backgroundColor: 'rgb(0, 0, 0)',
-            fontColor: 'rgb(255, 255, 255)',
-            href: '',
-          },
-          {
-            title: '',
-            backgroundColor: 'rgb(0, 0, 0)',
-            fontColor: 'rgb(255, 255, 255)',
-            href: '',
-          },
-          {
-            title: '',
-            backgroundColor: 'rgb(0, 0, 0)',
-            fontColor: 'rgb(255, 255, 255)',
-            href: '',
-          },
-        ],
-        location: '',
-        locationButtons: [
-          {
-            title: '',
-            fontColor: '#888',
-            href: '',
-          },
-          {
-            title: '',
-            fontColor: '#888',
-            href: '',
-          },
-          {
-            title: '',
-            fontColor: '#888',
-            href: '',
-          },
-        ],
-        title: '',
+        title: 'Your Property is Our Priority!',
         backgroundColor: 'rgb(254, 103, 0)',
         fontColor: 'rgb(255, 255, 255)',
+        location: '1000 5TH Street. Suite 226. Miami Beach, FL.',
+        locationButtons: [
+          {
+            title: 'Privacy policy',
+            fontColor: '#888',
+            href: 'https://ipcmiamibeach.com/privacy-policy',
+          },
+          {
+            title: 'Contact us',
+            fontColor: '#888',
+            href: 'https://ipcmiamibeach.com/contact/',
+          },
+          {
+            title: 'Unsubscribe',
+            fontColor: '#888',
+            href: 'http://ipcmiamibeach.com',
+          },
+        ],
+        buttons: [
+          {
+            title: 'Telephone',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: 'tel:+13055354265',
+          },
+          {
+            title: 'Email',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: 'mailto:info@ipcmiamibeach.com',
+          },
+          {
+            title: 'WhatsApp',
+            backgroundColor: 'rgb(0, 0, 0)',
+            fontColor: 'rgb(255, 255, 255)',
+            href: 'https://wa.me/13055354265?text=Hello,%20how%20can%20we%20help%20you?',
+          },
+        ],
       },
     });
   },

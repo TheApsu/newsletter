@@ -28,6 +28,7 @@ type SearcherTemplateProps = {
   handleAcceptBtn: () => void;
   handleCopyBtn: (id: string) => void;
   filter?: boolean | false;
+  editingId?: string;
 };
 
 export default function SearcherTemplate({
@@ -43,6 +44,7 @@ export default function SearcherTemplate({
   handleAcceptBtn,
   handleCopyBtn,
   filter = false,
+  editingId,
 }: SearcherTemplateProps) {
   const queryClient = useQueryClient();
 
@@ -179,14 +181,19 @@ export default function SearcherTemplate({
           {data.map((item) => (
             <div
               key={item.id}
-              className='item flex justify-between p-3 items-center border-gray-300 border rounded-lg '
+              className={`item flex justify-between items-center hover:bg-gray-100 border-gray-300 border rounded-lg transition-colors ${
+                editingId === item.id && 'bg-gray-100'
+              }`}
             >
-              <div className='flex gap-4 items-center max-w-[calc(100%-100px)] flex-1 w-full overflow-hidden'>
+              <button
+                onClick={() => handleEditBtnT(item.id)}
+                className='flex gap-4 p-3  items-center max-w-[calc(100%-100px)] flex-1 w-full overflow-hidden'
+              >
                 <EnvelopeIcon className='w-6 min-w-6' />
                 <p className='text-nowrap overflow-hidden text-ellipsis'>
                   {item.name}
                 </p>
-              </div>
+              </button>
               <div className='space-x-2 '>
                 <button
                   onClick={() => handleEditBtnT(item.id)}

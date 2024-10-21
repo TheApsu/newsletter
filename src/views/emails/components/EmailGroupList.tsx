@@ -109,6 +109,7 @@ export default function EmailGroupList() {
           handleEditBtn={handleEditBtn}
           handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
+          editingId={emailGroup?.id}
         />
       </>
     );

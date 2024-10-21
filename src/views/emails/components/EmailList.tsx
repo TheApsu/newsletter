@@ -106,6 +106,7 @@ export default function EmailList() {
           handleCopyBtn={handleCopyBtn}
           setAlert={setAlert}
           filter={true}
+          editingId={email?.id}
         />
       </>
     );
