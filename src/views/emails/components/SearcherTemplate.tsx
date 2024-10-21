@@ -182,7 +182,7 @@ export default function SearcherTemplate({
             <div
               key={item.id}
               className={`item flex justify-between items-center hover:bg-gray-100 border-gray-300 border rounded-lg transition-colors ${
-                editingId === item.id && 'bg-gray-100'
+                editingId === item.id && 'bg-gray-200 border border-gray-500'
               }`}
             >
               <button
